@@ -563,21 +563,21 @@ void Tracking::StereoInitialization()
 void Tracking::MonocularInitialization()
 {
 
-    if(!mpInitializer)
+    if(!mpInitializer)      //类指针，，可以后面被580行new构造函数赋值
     {
         // Set Reference Frame
-        if(mCurrentFrame.mvKeys.size()>100)
+        if(mCurrentFrame.mvKeys.size()>100)     //对象特征点大于100
         {
-            mInitialFrame = Frame(mCurrentFrame);
-            mLastFrame = Frame(mCurrentFrame);
+            mInitialFrame = Frame(mCurrentFrame);       //继承构造函数的初始化的使用
+            mLastFrame = Frame(mCurrentFrame);          //构造函数新用法，hh
             mvbPrevMatched.resize(mCurrentFrame.mvKeysUn.size());
-            for(size_t i=0; i<mCurrentFrame.mvKeysUn.size(); i++)
+            for(size_t i=0; i<mCurrentFrame.mvKeysUn.size(); i++)       //记录特征点
                 mvbPrevMatched[i]=mCurrentFrame.mvKeysUn[i].pt;
 
             if(mpInitializer)
-                delete mpInitializer;
+                delete mpInitializer;                               //删除指针指向的内存里的值
 
-            mpInitializer =  new Initializer(mCurrentFrame,1.0,200);
+            mpInitializer =  new Initializer(mCurrentFrame,1.0,200);    //类指针被实例化了，相当于一个对象的指针了
 
             fill(mvIniMatches.begin(),mvIniMatches.end(),-1);
 
@@ -590,7 +590,7 @@ void Tracking::MonocularInitialization()
         if((int)mCurrentFrame.mvKeys.size()<=100)
         {
             delete mpInitializer;
-            mpInitializer = static_cast<Initializer*>(NULL);
+            mpInitializer = static_cast<Initializer*>(NULL);        //static_cast显示类型转换NULL为Initializer类型的NULL
             fill(mvIniMatches.begin(),mvIniMatches.end(),-1);
             return;
         }
