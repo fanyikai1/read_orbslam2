@@ -575,7 +575,7 @@ void Tracking::MonocularInitialization()
                 mvbPrevMatched[i]=mCurrentFrame.mvKeysUn[i].pt;
 
             if(mpInitializer)
-                delete mpInitializer;                               //删除指针指向的内存里的值
+                delete mpInitializer;                               //删除指针指向的内存里的值--
 
             mpInitializer =  new Initializer(mCurrentFrame,1.0,200);    //类指针被实例化了，相当于一个对象的指针了
 
