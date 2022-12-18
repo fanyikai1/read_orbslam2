@@ -566,20 +566,21 @@ void Tracking::MonocularInitialization()
     if(!mpInitializer)      //类指针，，可以后面被580行new构造函数赋值
     {
         // Set Reference Frame
-        if(mCurrentFrame.mvKeys.size()>100)     //对象特征点大于100
+        if(mCurrentFrame.mvKeys.size()>100)     //？？问题是这个特征TM是在哪里求出来的，村一个疑问，对象特征点大于100
         {
-            mInitialFrame = Frame(mCurrentFrame);       //继承构造函数的初始化的使用
-            mLastFrame = Frame(mCurrentFrame);          //构造函数新用法，hh
+            mInitialFrame = Frame(mCurrentFrame);       //继承构造函数的初始化的使用，创建对象的三种方式
+            mLastFrame = Frame(mCurrentFrame);          //构造函数返回给一个对象新用法，hh
             mvbPrevMatched.resize(mCurrentFrame.mvKeysUn.size());
             for(size_t i=0; i<mCurrentFrame.mvKeysUn.size(); i++)       //记录特征点
                 mvbPrevMatched[i]=mCurrentFrame.mvKeysUn[i].pt;
 
             if(mpInitializer)
-                delete mpInitializer;                               //删除指针指向的内存里的值--
+                delete mpInitializer;                               //删除指针指向的内存里的值
 
-            mpInitializer =  new Initializer(mCurrentFrame,1.0,200);    //类指针被实例化了，相当于一个对象的指针了
+            mpInitializer =  new Initializer(mCurrentFrame,1.0,200);    //类指针被实例化了，相当于一个对象的指针了，对象实例化的三种方式，这种事在堆上t t1和t t1=t()和t *t1=new t(),前两种事在栈上，第三种事堆上要delete
 
-            fill(mvIniMatches.begin(),mvIniMatches.end(),-1);
+            fill(mvIniMatches.begin(),mvIniMatches.end(),-1);           //fill()事std自带函数，作用是给数组或者vector赋值，-1表示没有匹配，存的是匹配的id
+            
 
             return;
         }

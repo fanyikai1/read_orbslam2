@@ -329,7 +329,7 @@ vector<size_t> Frame::GetFeaturesInArea(const float &x, const float  &y, const f
     vector<size_t> vIndices;
     vIndices.reserve(N);
 
-    const int nMinCellX = max(0,(int)floor((x-mnMinX-r)*mfGridElementWidthInv));
+    const int nMinCellX = max(0,(int)floor((x-mnMinX-r)*mfGridElementWidthInv));        //mfGridElementWidthInv是全局变量，所以要看他具体是什么就要看他的引用，是在哪里赋值的F4
     if(nMinCellX>=FRAME_GRID_COLS)
         return vIndices;
 
